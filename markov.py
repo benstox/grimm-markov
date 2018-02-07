@@ -18,12 +18,14 @@ for sentence in sentences:
     words = sentence.split()
     if len(words) < order:
         continue
-    initials.append(words[0])
+    initials.append(" ".join(words[:order - 1]))
     finals.append(words[-1])
     num_words = len(words)
     for i in range(num_words - (order - 1)):
-        initial, *sequence = words[i:i + order]
-        sequences[initial].append(sequence)
+        order_words = words[i:i + order]
+        key_words = order_words[:order - 1]
+        next_word = order_words[-1]
+        sequences[" ".join(key_words)].append(next_word)
 
 word_markov_data = {
     "order": order,
