@@ -3,7 +3,10 @@ import json
 import random
 import re
 
-with open("german_word_markov.json", "r") as f:
+ORDER = 3
+
+
+with open(f"grimm_markov_{ORDER}.json", "r") as f:
     markov_data = json.load(f)
 
 order = markov_data["order"]
@@ -17,8 +20,7 @@ print(f"Order {order}")
 def generate_sentence(min_num_words=7):
     initial = random.choice(initials)
     sentence = initial.split()
-    while sentence[-1] not in finals or len(sentence) < min_num_words:
-        print(len(sentence))
+    while " ".join(sentence[-1 * (order - 1):]) not in finals or len(sentence) < min_num_words:
         try:
             key_words = sentence[len(sentence) - (order - 1):]
             key_words = " ".join(key_words)

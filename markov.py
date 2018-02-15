@@ -10,7 +10,7 @@ sentences = all_text.split(".")
 sentences = [sentence.strip() for sentence in sentences]
 
 # word Markov
-order = 3
+order = 2
 initials = []
 finals = []
 sequences = defaultdict(list)
@@ -19,7 +19,7 @@ for sentence in sentences:
     if len(words) < order:
         continue
     initials.append(" ".join(words[:order - 1]))
-    finals.append(words[-1])
+    finals.append(" ".join(words[-1 * (order - 1):]))
     num_words = len(words)
     for i in range(num_words - (order - 1)):
         order_words = words[i:i + order]
@@ -34,5 +34,5 @@ word_markov_data = {
     "sequences": sequences,
 }
 
-with open("german_word_markov.json", "w") as f:
+with open(f"grimm_markov_{order}.json", "w") as f:
     json.dump(word_markov_data, f)
